@@ -1,0 +1,66 @@
+﻿@model M17E_TrabalhoModelo_2021_22.Models.Quarto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Quarto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Piso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Piso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lotacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lotacao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Custo_dia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Custo_dia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Casa_banho)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Casa_banho)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipo_Quarto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tipo_Quarto)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

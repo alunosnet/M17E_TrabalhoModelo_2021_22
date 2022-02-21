@@ -1,0 +1,63 @@
+﻿@model IEnumerable<M17E_TrabalhoModelo_2021_22.Models.Quarto>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Piso)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lotacao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Custo_dia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Casa_banho)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tipo_Quarto)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Piso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lotacao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Custo_dia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Casa_banho)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tipo_Quarto)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Detalhes", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Apagar", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
