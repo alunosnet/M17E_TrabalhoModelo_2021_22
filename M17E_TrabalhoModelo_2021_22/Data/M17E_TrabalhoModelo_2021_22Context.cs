@@ -21,5 +21,6 @@ namespace M17E_TrabalhoModelo_2021_22.Data
 
         public System.Data.Entity.DbSet<M17E_TrabalhoModelo_2021_22.Models.Quarto> Quartos { get; set; }
         public System.Data.Entity.DbSet<M17E_TrabalhoModelo_2021_22.Models.Cliente> Clientes { get; set; }
+        public System.Data.Entity.DbSet<M17E_TrabalhoModelo_2021_22.Models.Estadia> Estadias { get; set; }
     }
 }

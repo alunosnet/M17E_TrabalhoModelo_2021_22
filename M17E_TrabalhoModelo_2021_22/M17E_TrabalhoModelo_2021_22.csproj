@@ -127,6 +127,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\EstadiasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuartosController.cs" />
     <Compile Include="Data\M17E_TrabalhoModelo_2021_22Context.cs" />
@@ -140,6 +141,10 @@
     <Compile Include="Migrations\202202181106581_Clientes.cs" />
     <Compile Include="Migrations\202202181106581_Clientes.Designer.cs">
       <DependentUpon>202202181106581_Clientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202220940347_estadias.cs" />
+    <Compile Include="Migrations\202202220940347_estadias.Designer.cs">
+      <DependentUpon>202202220940347_estadias.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cliente.cs" />
@@ -193,9 +198,17 @@
     <Content Include="Views\Clientes\Details.cshtml" />
     <Content Include="Views\Clientes\Edit.cshtml" />
     <Content Include="Views\Clientes\Index.cshtml" />
+    <Content Include="Views\Estadias\Create.cshtml" />
+    <Content Include="Views\Estadias\Delete.cshtml" />
+    <Content Include="Views\Estadias\Details.cshtml" />
+    <Content Include="Views\Estadias\Edit.cshtml" />
+    <Content Include="Views\Estadias\Index.cshtml" />
+    <Content Include="Views\Estadias\ListaEstadiasEmCurso.cshtml" />
+    <Content Include="Views\Estadias\ProcessaSaida.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Fotos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -216,6 +229,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202181106581_Clientes.resx">
       <DependentUpon>202202181106581_Clientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202220940347_estadias.resx">
+      <DependentUpon>202202220940347_estadias.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

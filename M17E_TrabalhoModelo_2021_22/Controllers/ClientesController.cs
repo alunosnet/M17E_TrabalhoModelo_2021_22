@@ -19,13 +19,14 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         // GET: Clientes
         public async Task<ActionResult> Index()
         {
-            //TODO: adicionar fotografia de perfil
+            
             return View(await db.Clientes.ToListAsync());
         }
 
         // GET: Clientes/Details/5
         public async Task<ActionResult> Details(int? id)
         {
+            //TODO: mostrar historico das estadias
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -41,7 +42,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         // GET: Clientes/Create
         public ActionResult Create()
         {
-            //TODO: adicionar fotografia de perfil
+            
             return View();
         }
 
@@ -52,7 +53,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "ClienteID,Nome,Morada,CP,Email,Telefone,DataNascimento")] Cliente cliente)
         {
-            //TODO: adicionar fotografia de perfil
+            
             if (ModelState.IsValid)
             {
                 //não permitir emails repetidos
@@ -64,6 +65,13 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
                 }
                 db.Clientes.Add(cliente);
                 await db.SaveChangesAsync();
+                //guardar fotografia
+                HttpPostedFileBase fotografia = Request.Files["fotografia"];
+                if(fotografia!=null && fotografia.ContentLength > 0)
+                {
+                    string nome = Server.MapPath("~/Fotos/") + cliente.ClienteID + ".jpg";
+                    fotografia.SaveAs(nome);
+                }
                 return RedirectToAction("Index");
             }
 
@@ -94,7 +102,13 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         {
             if (ModelState.IsValid)
             {
-                //TODO: não permitir emails repetidos
+                //não permitir emails repetidos
+                int contar = db.Clientes.Where(c => c.Email == cliente.Email && c.ClienteID!=cliente.ClienteID).ToList().Count;
+                if (contar > 0)
+                {
+                    ModelState.AddModelError("Email", "O email já existe.");
+                    return View(cliente);
+                }
                 db.Entry(cliente).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");

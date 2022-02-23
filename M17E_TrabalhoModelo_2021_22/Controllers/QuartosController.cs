@@ -34,6 +34,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(quarto);
         }
         // GET: Quartos/Create

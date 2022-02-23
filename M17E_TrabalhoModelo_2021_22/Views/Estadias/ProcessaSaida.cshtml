@@ -1,0 +1,62 @@
+﻿@model M17E_TrabalhoModelo_2021_22.Models.Estadia
+
+@{
+    ViewBag.Title = "ProcessaSaida";
+}
+
+<h2>ProcessaSaida</h2>
+
+<div>
+    <h4>Estadia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.cliente.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cliente.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quarto.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quarto.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.data_entrada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.data_entrada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.data_saida)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.data_saida)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.valor_pago)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.valor_pago)
+        </dd>
+        <dt>
+            Dias de estadia
+        </dt>
+        <dd>
+            @Html.Raw(ViewBag.dias)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Voltar", "ListaEstadiasEmCurso")
+</p>
