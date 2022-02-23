@@ -16,7 +16,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-            ViewBag.Funcionario = "Joaquim";
+
             return View();
         }
 

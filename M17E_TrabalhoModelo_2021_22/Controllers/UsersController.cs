@@ -12,126 +12,114 @@ using M17E_TrabalhoModelo_2021_22.Models;
 
 namespace M17E_TrabalhoModelo_2021_22.Controllers
 {
-    public class ClientesController : Controller
+    public class UsersController : Controller
     {
         private M17E_TrabalhoModelo_2021_22Context db = new M17E_TrabalhoModelo_2021_22Context();
 
-        // GET: Clientes
+        // GET: Users
         public async Task<ActionResult> Index()
         {
-            return View(await db.Clientes.ToListAsync());
+            return View(await db.User.ToListAsync());
         }
 
-        // GET: Clientes/Details/5
+        // GET: Users/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = await db.Clientes.FindAsync(id);
-            if (cliente == null)
+            User user = await db.User.FindAsync(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(cliente);
+            return View(user);
         }
 
-        // GET: Clientes/Create
+        // GET: Users/Create
         public ActionResult Create()
         {
-            return View();
+            //DD perfil
+            var utilizador = new User();
+            utilizador.perfis = new[]
+            {
+                new SelectListItem{Value = "0", Text = "Administrador"},
+                new SelectListItem{Value = "1", Text = "Funcionário"}
+            };
+            return View(utilizador);
         }
 
-        // POST: Clientes/Create
+        // POST: Users/Create
         // Para proteger-se contra ataques de excesso de postagem, ative as propriedades específicas às quais deseja se associar. 
         // Para obter mais detalhes, confira https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ClienteID,Nome,Morada,CP,Email,Telefone,DataNascimento")] Cliente cliente)
+        public async Task<ActionResult> Create([Bind(Include = "UserID,nome,password,perfil,estado")] User user)
         {
             if (ModelState.IsValid)
             {
-                //não permitir emails repetidos
-                int contar = db.Clientes.Where( c=> c.Email==cliente.Email).ToList().Count();
-                if (contar > 0)
-                {
-                    ModelState.AddModelError("Email", "O email já existe.");
-                    return View(cliente);
-                }
-                db.Clientes.Add(cliente);
+                db.User.Add(user);
                 await db.SaveChangesAsync();
-                // guardar fotografia
-                HttpPostedFileBase fotografia = Request.Files["fotografia"];
-                if (fotografia != null && fotografia.ContentLength > 0)
-                {
-                    string nome = Server.MapPath("~/Fotos/") + cliente.ClienteID + ".jpg";
-                    fotografia.SaveAs(nome);
-                }
                 return RedirectToAction("Index");
             }
-            return View(cliente);
+
+            return View(user);
         }
 
-        // GET: Clientes/Edit/5
+        // GET: Users/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = await db.Clientes.FindAsync(id);
-            if (cliente == null)
+            User user = await db.User.FindAsync(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(cliente);
+            return View(user);
         }
 
-        // POST: Clientes/Edit/5
+        // POST: Users/Edit/5
         // Para proteger-se contra ataques de excesso de postagem, ative as propriedades específicas às quais deseja se associar. 
         // Para obter mais detalhes, confira https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ClienteID,Nome,Morada,CP,Email,Telefone,DataNascimento")] Cliente cliente)
+        public async Task<ActionResult> Edit([Bind(Include = "UserID,nome,password,perfil,estado")] User user)
         {
             if (ModelState.IsValid)
             {
-                int contar = db.Clientes.Where(c => c.Email == cliente.Email && c.ClienteID != cliente.ClienteID).ToList().Count();
-                if (contar > 0)
-                {
-                    ModelState.AddModelError("Email", "O email já existe.");
-                    return View(cliente);
-                }
-                db.Entry(cliente).State = EntityState.Modified;
+                db.Entry(user).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(cliente);
+            return View(user);
         }
 
-        // GET: Clientes/Delete/5
+        // GET: Users/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = await db.Clientes.FindAsync(id);
-            if (cliente == null)
+            User user = await db.User.FindAsync(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(cliente);
+            return View(user);
         }
 
-        // POST: Clientes/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Cliente cliente = await db.Clientes.FindAsync(id);
-            db.Clientes.Remove(cliente);
+            User user = await db.User.FindAsync(id);
+            db.User.Remove(user);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

@@ -11,7 +11,9 @@
 </p>
 <table class="table">
     <tr>
-        <th></th>
+        <th>
+
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Nome)
         </th>
@@ -36,7 +38,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            <img src="@Url.Content(String.Format("~/Fotos/{0}.jpg",item.ClienteID))" width="150" />
+            <img src="@Url.Content(String.Format("~/Fotos/{0}.jpg", item.ClienteID))" width="150" />
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Nome)

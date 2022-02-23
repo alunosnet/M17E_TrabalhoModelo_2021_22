@@ -34,9 +34,9 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
             {
                 return HttpNotFound();
             }
-
-            return View(quarto);
+            return View(quarto);    
         }
+
         // GET: Quartos/Create
         public ActionResult Create()
         {
@@ -44,8 +44,8 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         }
 
         // POST: Quartos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // Para proteger-se contra ataques de excesso de postagem, ative as propriedades específicas às quais deseja se associar. 
+        // Para obter mais detalhes, confira https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Piso,Lotacao,Custo_dia,Casa_banho,Estado,Tipo_Quarto")] Quarto quarto)
@@ -76,8 +76,8 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         }
 
         // POST: Quartos/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // Para proteger-se contra ataques de excesso de postagem, ative as propriedades específicas às quais deseja se associar. 
+        // Para obter mais detalhes, confira https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Piso,Lotacao,Custo_dia,Casa_banho,Estado,Tipo_Quarto")] Quarto quarto)
@@ -114,7 +114,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
             Quarto quarto = await db.Quartos.FindAsync(id);
             db.Quartos.Remove(quarto);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index");   
         }
 
         protected override void Dispose(bool disposing)
