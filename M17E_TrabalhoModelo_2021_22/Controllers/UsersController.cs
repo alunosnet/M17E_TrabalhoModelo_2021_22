@@ -9,9 +9,12 @@ using System.Web;
 using System.Web.Mvc;
 using M17E_TrabalhoModelo_2021_22.Data;
 using M17E_TrabalhoModelo_2021_22.Models;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace M17E_TrabalhoModelo_2021_22.Controllers
 {
+    [Authorize(Roles ="Administrador")]
     public class UsersController : Controller
     {
         private M17E_TrabalhoModelo_2021_22Context db = new M17E_TrabalhoModelo_2021_22Context();
@@ -19,7 +22,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         // GET: Users
         public async Task<ActionResult> Index()
         {
-            return View(await db.User.ToListAsync());
+            return View(await db.Users.ToListAsync());
         }
 
         // GET: Users/Details/5
@@ -29,7 +32,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = await db.User.FindAsync(id);
+            User user = await db.Users.FindAsync(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -57,9 +60,31 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "UserID,nome,password,perfil,estado")] User user)
         {
+            user.perfis = new[]
+            {
+                new SelectListItem{Value = "0", Text = "Administrador"},
+                new SelectListItem{Value = "1", Text = "Funcionário"}
+            };
             if (ModelState.IsValid)
             {
-                db.User.Add(user);
+                //verificar se nome já existe
+                var t = db.Users.Where(u => u.nome == user.nome).ToList();
+                if(t!=null && t.Count > 0)
+                {
+                    ModelState.AddModelError("nome", "Já existe um utilizador com esse nome");
+                    return View(user);
+                }
+                //validar a password
+                if(user.password==null || user.password.Trim().Length < 5)
+                {
+                    ModelState.AddModelError("password", "Password não é válida");
+                    return View(user);
+                }
+                //hash password
+                HMACSHA512 hMACSHA512 = new HMACSHA512(new byte[] { 1 });
+                var password = hMACSHA512.ComputeHash(Encoding.UTF8.GetBytes(user.password));
+                user.password = Convert.ToBase64String(password);
+                db.Users.Add(user);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -74,11 +99,17 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = await db.User.FindAsync(id);
+            User user = await db.Users.FindAsync(id);
             if (user == null)
             {
                 return HttpNotFound();
             }
+            //TODO: se não é admin só pode editar a sua própria conta
+            user.perfis = new[]
+            {
+                new SelectListItem{Value = "0", Text = "Administrador"},
+                new SelectListItem{Value = "1", Text = "Funcionário"}
+            };
             return View(user);
         }
 
@@ -105,7 +136,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = await db.User.FindAsync(id);
+            User user = await db.Users.FindAsync(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -118,8 +149,8 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            User user = await db.User.FindAsync(id);
-            db.User.Remove(user);
+            User user = await db.Users.FindAsync(id);
+            db.Users.Remove(user);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

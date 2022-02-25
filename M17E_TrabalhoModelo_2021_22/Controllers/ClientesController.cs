@@ -12,6 +12,7 @@ using M17E_TrabalhoModelo_2021_22.Models;
 
 namespace M17E_TrabalhoModelo_2021_22.Controllers
 {
+    [Authorize]
     public class ClientesController : Controller
     {
         private M17E_TrabalhoModelo_2021_22Context db = new M17E_TrabalhoModelo_2021_22Context();
@@ -111,6 +112,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         }
 
         // GET: Clientes/Delete/5
+        [Authorize(Roles ="Administrador")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -128,6 +130,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         // POST: Clientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Cliente cliente = await db.Clientes.FindAsync(id);

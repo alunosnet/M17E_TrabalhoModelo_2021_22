@@ -59,6 +59,21 @@
         </dd>
 
     </dl>
+    <hr/>
+    <h2>Estadias</h2>
+    <table class="table">
+        <tr>
+            <th>Data Entrada</th>
+            <th>Quarto</th>
+        </tr>
+        @foreach(var estadia in Model.listaEstadias)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => estadia.data_entrada)</td>
+                    <td>@Html.DisplayFor(modelItem => estadia.QuartoID) </td>
+                </tr>
+            }
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ClienteID }) |

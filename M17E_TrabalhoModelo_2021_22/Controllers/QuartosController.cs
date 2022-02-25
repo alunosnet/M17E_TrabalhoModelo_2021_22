@@ -12,6 +12,7 @@ using M17E_TrabalhoModelo_2021_22.Models;
 
 namespace M17E_TrabalhoModelo_2021_22.Controllers
 {
+    [Authorize]
     public class QuartosController : Controller
     {
         private M17E_TrabalhoModelo_2021_22Context db = new M17E_TrabalhoModelo_2021_22Context();
@@ -23,6 +24,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         }
 
         // GET: Quartos/Details/5
+        [Authorize(Roles ="Administrador")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,6 +40,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         }
 
         // GET: Quartos/Create
+        [Authorize(Roles = "Administrador")]
         public ActionResult Create()
         {
             return View();
@@ -48,6 +51,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         // Para obter mais detalhes, confira https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Create([Bind(Include = "Id,Piso,Lotacao,Custo_dia,Casa_banho,Estado,Tipo_Quarto")] Quarto quarto)
         {
             if (ModelState.IsValid)
@@ -61,6 +65,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         }
 
         // GET: Quartos/Edit/5
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,6 +85,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         // Para obter mais detalhes, confira https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Piso,Lotacao,Custo_dia,Casa_banho,Estado,Tipo_Quarto")] Quarto quarto)
         {
             if (ModelState.IsValid)
@@ -92,6 +98,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         }
 
         // GET: Quartos/Delete/5
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -109,6 +116,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         // POST: Quartos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Quarto quarto = await db.Quartos.FindAsync(id);

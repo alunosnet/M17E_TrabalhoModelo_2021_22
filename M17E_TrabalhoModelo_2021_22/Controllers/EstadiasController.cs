@@ -12,6 +12,7 @@ using M17E_TrabalhoModelo_2021_22.Models;
 
 namespace M17E_TrabalhoModelo_2021_22.Controllers
 {
+    [Authorize]
     public class EstadiasController : Controller
     {
         private M17E_TrabalhoModelo_2021_22Context db = new M17E_TrabalhoModelo_2021_22Context();
@@ -19,7 +20,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         // GET: Estadias
         public async Task<ActionResult> Index()
         {
-            var estadia = db.Estadia.Include(e => e.cliente).Include(e => e.quarto);
+            var estadia = db.Estadias.Include(e => e.cliente).Include(e => e.quarto);
             return View(await estadia.ToListAsync());
         }
 
@@ -30,7 +31,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Estadia estadia = await db.Estadia.FindAsync(id);
+            Estadia estadia = await db.Estadias.FindAsync(id);
             if (estadia == null)
             {
                 return HttpNotFound();
@@ -64,7 +65,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
                 var quarto=db.Quartos.Find(estadia.QuartoID);
                 quarto.Estado = false;
                 db.Entry(quarto).CurrentValues.SetValues(quarto);
-                db.Estadia.Add(estadia);
+                db.Estadias.Add(estadia);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -81,7 +82,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Estadia estadia = await db.Estadia.FindAsync(id);
+            Estadia estadia = await db.Estadias.FindAsync(id);
             if (estadia == null)
             {
                 return HttpNotFound();
@@ -137,7 +138,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
 
         public async Task<ActionResult> ListaEstadiasEmCurso()
         {
-            var estadia = db.Estadia.Where(e => e.valor_pago==0 && e.data_entrada==e.data_saida).Include(e => e.cliente).Include(e => e.quarto);
+            var estadia = db.Estadias.Where(e => e.valor_pago==0 && e.data_entrada==e.data_saida).Include(e => e.cliente).Include(e => e.quarto);
             return View(await estadia.ToListAsync());
         }
 
@@ -147,7 +148,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
             { 
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Estadia estadia = await db.Estadia.FindAsync(id);
+            Estadia estadia = await db.Estadias.FindAsync(id);
             if (estadia == null)
             {
                 return HttpNotFound();

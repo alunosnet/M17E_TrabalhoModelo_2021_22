@@ -40,6 +40,6 @@ namespace M17E_TrabalhoModelo_2021_22.Models
         [NotMapped]
         public int Idade { get; set; }
         // lista das estadias
-        // public virtual List<Estadia> listaEstadias { get; set; }
+         public virtual List<Estadia> listaEstadias { get; set; }
     }
 }
