@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using M17E_TrabalhoModelo_2021_22.Helper
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -31,11 +32,19 @@
                         <li>@Html.ActionLink("Estadias", "Index", "Estadias")</li>
                         <li>@Html.ActionLink("Clientes", "Index", "Clientes")</li>
                         <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Consultas</a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Pesquisa", "Index", "Consultas")</li>
+                                <li>@Html.ActionLink("Pesquisa Dinamica", "PesquisaDinamica", "Consultas")</li>
+                                <li>@Html.ActionLink("Melhor Cliente", "MelhorCliente", "Consultas")</li>
+                            </ul>
+                        </li>
+                        <li>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 @Html.DisplayName("Olá "+User.Identity.Name)
                             </a>
                             <ul class="dropdown-menu">
-                                <!--Editar perfil-->
+                                <li>@Html.ActionLink("Editar perfil","Edit/"+@Html.UserId(User),"Users")</li>
                                 <li>@Html.ActionLink("Terminar sessão","Index","Logout")</li>
                             </ul>
                         </li>

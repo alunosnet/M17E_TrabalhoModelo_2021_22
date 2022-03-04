@@ -15,7 +15,6 @@ namespace M17E_TrabalhoModelo_2021_22.Models
         [MinLength(2,ErrorMessage = "Nome muito pequeno")]
         public string nome { get; set; }
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Indique a password")]
         public string password { get; set; }
         [Required(ErrorMessage = "Indique o perfil")]
         [Display(Name = "Perfil do utilizador")]

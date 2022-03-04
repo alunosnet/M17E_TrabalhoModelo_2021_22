@@ -143,6 +143,10 @@
     <Compile Include="Migrations\202202250903382_todas.designer.cs">
       <DependentUpon>202202250903382_todas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203040945277_user atualizado.cs" />
+    <Compile Include="Migrations\202203040945277_user atualizado.Designer.cs">
+      <DependentUpon>202203040945277_user atualizado.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppRoleProvider.cs" />
     <Compile Include="Models\Cliente.cs" />
@@ -213,6 +217,7 @@
     <Content Include="Views\Consultas\Index.cshtml" />
     <Content Include="Views\Consultas\PesquisaCliente.cshtml" />
     <Content Include="Views\Consultas\PesquisaDinamica.cshtml" />
+    <Content Include="Views\Consultas\MelhorCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -235,6 +240,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202202250903382_todas.resx">
       <DependentUpon>202202250903382_todas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203040945277_user atualizado.resx">
+      <DependentUpon>202203040945277_user atualizado.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
