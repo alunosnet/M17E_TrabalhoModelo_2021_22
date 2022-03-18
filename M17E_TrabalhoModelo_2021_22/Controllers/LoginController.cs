@@ -32,7 +32,7 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
                 user.password = Convert.ToBase64String(password);
                 foreach(var utilizador in db.Users.ToList())
                 {
-                    if(utilizador.nome==user.nome && utilizador.password == user.password)
+                    if(utilizador.nome.ToLower()==user.nome.ToLower() && utilizador.password == user.password)
                     {
                         //iniciar sessão
                         FormsAuthentication.SetAuthCookie(user.nome, false);
