@@ -4,6 +4,10 @@
     ViewBag.Title = "Index";
 }
 
+@using PagedList.Mvc; 
+@using PagedList; 
+<link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
 <h2>Index</h2>
 
 <p>
@@ -35,38 +39,47 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            <img src="@Url.Content(String.Format("~/Fotos/{0}.jpg", item.ClienteID))" width="150" />
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Morada)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CP)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Telefone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataNascimento)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ClienteID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ClienteID }) |
-            @if (Request.IsAuthenticated && User.IsInRole("Administrador"))
-            {
-                @Html.ActionLink("Delete", "Delete", new { id = item.ClienteID })
-            }
-        </td>
-    </tr>
-}
+    @foreach (var item in ViewBag.umapagina)
+    {
+        <tr>
+            <td>
+                @{
+                    string ficheiro = Server.MapPath("~/Fotos/" + item.ClienteID + ".jpg");
+                    if (System.IO.File.Exists(ficheiro))
+                    {
+                        <img src="@Url.Content(String.Format("~/Fotos/{0}.jpg", item.ClienteID))" width="150" />
+                    }
+                }
+            </td>
+            <td>
+                @item.Nome
+            </td>
+            <td>
+                @item.Morada
+            </td>
+            <td>
+                @item.CP
+            </td>
+            <td>
+                @item.Email
+            </td>
+            <td>
+                @item.Telefone
+            </td>
+            <td>
+                @item.DataNascimento
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ClienteID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ClienteID }) |
+                @if (Request.IsAuthenticated && User.IsInRole("Administrador"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ClienteID })
+                }
+            </td>
+        </tr>
+    }
 
 </table>
+<!-- output a paging control that lets the user navigation to the previous page, next page, etc -->
+@Html.PagedListPager((IPagedList)ViewBag.umapagina, page => Url.Action("Index", new { page }))

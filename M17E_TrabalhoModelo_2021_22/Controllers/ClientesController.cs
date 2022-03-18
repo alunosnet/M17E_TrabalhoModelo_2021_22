@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using M17E_TrabalhoModelo_2021_22.Data;
 using M17E_TrabalhoModelo_2021_22.Models;
+using PagedList;
 
 namespace M17E_TrabalhoModelo_2021_22.Controllers
 {
@@ -18,8 +19,15 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
         private M17E_TrabalhoModelo_2021_22Context db = new M17E_TrabalhoModelo_2021_22Context();
 
         // GET: Clientes
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int? page)
         {
+            var clientes = db.Clientes.ToList();
+
+            var pageNumber = page ?? 1; // if no page was specified in the querystring, default to the first page (1)
+            var umapagina = clientes.ToPagedList(pageNumber, 10); // will only contain 25 products max because of the pageSize
+
+            ViewBag.umapagina = umapagina;
+
             return View(await db.Clientes.ToListAsync());
         }
 
@@ -136,6 +144,11 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
             Cliente cliente = await db.Clientes.FindAsync(id);
             db.Clientes.Remove(cliente);
             await db.SaveChangesAsync();
+            //TODO: apagar imagem
+            var ficheiro = Server.MapPath("~/Fotos/") + id + ".jpg";
+            if (System.IO.File.Exists(ficheiro))
+                System.IO.File.Delete(ficheiro);
+
             return RedirectToAction("Index");
         }
 
