@@ -1,9 +1,11 @@
 ﻿using M17E_TrabalhoModelo_2021_22.Data;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using M17E_TrabalhoModelo_2021_22.Models;
 
 namespace M17E_TrabalhoModelo_2021_22.Controllers
 {
@@ -56,10 +58,38 @@ namespace M17E_TrabalhoModelo_2021_22.Controllers
             }
             return View();
         }
+        public ActionResult EstadiasDeUmCliente()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult EstadiasDeUmCliente(string nome)
+        {
+            string sql = @"Select nome,count(*) as n_estadias
+                            from Estadias INNER JOIN Clientes
+                            ON Estadias.ClienteID=Clientes.ClienteID
+                            where nome like @p0
+                            GROUP By nome";
+
+           // SqlParameter parametro = new SqlParameter("@p1", "%" + nome + "%");
+            var estadias = db.Database.SqlQuery<Campos>(sql, "%"+nome+"%");
+            
+            if (estadias != null && estadias.ToList().Count > 0)
+                ViewBag.estadias = estadias.ToList()[0];
+            else
+            {
+                Campos temp = new Campos();
+                temp.nome = "Não foram encontrados registos";
+                ViewBag.estadias = temp;
+            }
+            return View();
+        }
         public class Campos
         {
             public string nome { get; set; }
             public decimal valor { get; set; }
+            public int n_estadias { get; set; }
         }
         protected override void Dispose(bool disposing)
         {

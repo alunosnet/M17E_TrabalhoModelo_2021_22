@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "EstadiasDeUmCliente";
+}
+
+<h2>EstadiasDeUmCliente</h2>
+
+<form method="POST">
+    Nome Cliente:<input type="text" name="nome"/><br/>
+    <input type="submit" value="Pesquisar"/>
+</form>
+
+@if (ViewBag.estadias!=null)
+{
+    @ViewBag.estadias.nome; <span>|</span>
+    @ViewBag.estadias.valor;
+}
